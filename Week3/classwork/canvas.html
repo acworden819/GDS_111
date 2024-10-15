@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Week 3 HTML Canvas Lab</h1>
+    <canvas id="canvas" width="800" height="600" style="border: 3px solid black;" >
+        Please check your browser settings
+    </canvas>
+    <script>
+        //Reference to canvas element
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+
+        ctx.fillStyle = "#ff0000";
+        //ctx.fillRect(x pos, y pos, width, height)
+        ctx.fillRect(20, 20, 50, 100);
+        ctx.fillStyle = "#0000ff";
+        ctx.fillRect(60, 60, 50, 100);
+
+        //makes an outline for the box
+        ctx.strokeStyle = "#ffff00";
+        ctx.lineWidth = "10";
+        ctx.strokeRect(80,20,50,100)
+
+        //lines
+        ctx.strokeStyle = "#ff00ff";
+        ctx.beginPath();
+        ctx.moveTo(0,0);
+        ctx.lineTo(800,600);
+        ctx.lineTo(-0,300);
+        ctx.stroke();
+        //a new line
+        ctx.beginPath();
+        ctx.moveTo(400,0);
+        ctx.lineTo(400,600);
+        ctx.strokeStyle = "#00ff00";
+        ctx.stroke();
+
+        ctx.strokeStyle = "#ff00ff";
+        ctx.fillStyle = "#00ffff";
+
+        ctx.beginPath();
+        ctx.moveTo(400, 20);
+        ctx.lineTo(450, 100);
+        ctx.lineTo(350, 100);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        //draw a circle
+        ctx.fillStyle = "#35cfac";
+
+        ctx.beginPath();
+        //ctx.arc(x pos, y pos, radius, start angle, end angle, is clockwise?)
+        ctx.arc(400,300,100,0,Math.PI*2, false);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+    </script>
+</body>
+</html>
