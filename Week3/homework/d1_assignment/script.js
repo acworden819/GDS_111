@@ -4,28 +4,27 @@ var ctx = canvas.getContext("2d");
 
 //SQUARE
 ctx.fillStyle = "#ffff00";
-ctx.strokeStyle = 
 ctx.fillRect(85, 302, 100, 100);
-ctx.strokeStyle = "#000000"
+
+ctx.strokeStyle = "#000000";
 ctx.lineWidth = "5";
-ctx.strokeRect(85, 302, 100, 100)
+ctx.strokeRect(85, 302, 100, 100);
 
 
 //CIRCLE
 ctx.fillStyle = "#ffff00";
 ctx.beginPath();
-//ctx.arc(x pos, y pos, radius, start angle, end angle, is clockwise?)
 ctx.arc(385,441,68,0,Math.PI*2, false);
 ctx.closePath();
 ctx.fill();
 
-ctx.strokeStyle = "#ff0000"
+ctx.strokeStyle = "#ff0000";
 ctx.lineWidth = "5";
 ctx.stroke();
 
+
 //PENTAGON
 ctx.fillStyle = "#ff00ff";
-
 ctx.beginPath();
 ctx.moveTo(557,308);
 ctx.lineTo(668,283);
@@ -35,14 +34,13 @@ ctx.lineTo(547,421);
 ctx.lineTo(557,308);
 ctx.fill();
 
-ctx.strokeStyle = "#00ffff"
+ctx.strokeStyle = "#00ffff";
 ctx.lineWidth = "5";
 ctx.stroke();
 
 
 //STAR
-ctx.fillStyle    = "#ffff00";
-
+ctx.fillStyle = "#ffff00";
 ctx.beginPath();
 ctx.moveTo(635,493);
 ctx.lineTo(669,553);
@@ -57,12 +55,13 @@ ctx.lineTo(635-(669-635),553);
 ctx.lineTo(635,493);
 ctx.fill();
 
-ctx.strokeStyle = "#202020"
+ctx.strokeStyle = "#202020";
 ctx.lineWidth = "5";
 ctx.stroke();
 
+
 //LINE
-ctx.strokeStyle = "#ff0000"
+ctx.strokeStyle = "#ff0000";
 ctx.beginPath();
 ctx.moveTo(85, 682);
 ctx.lineTo(279,548);
