@@ -9,15 +9,20 @@ var c = document.querySelector(`canvas`)
 var ctx = c.getContext(`2d`)
 var fps = 1000 / 60
 var timer = setInterval(main, fps)
+var score = 0;
 
+var gameScenes = ["start", "game", "gameOver"];
+var currentScene = gameScenes[0];
+
+var krabbyPatty = document.getElementById("KrabbyPatty")
 
 /*------------Declare Variables Here--------*/
 var player = new GameObject();
 player.color = "#0000ff";
-player.w = 40;
-player.h = 40;
+player.w = 220;
+player.h = 30;
 player.friction = 0.8;
-var playerSpeed = 5;
+var playerSpeed = 15;
 
 
 //generate enemies
@@ -25,13 +30,14 @@ var enemies = [];
 var numberOfEnemies = 20;
 
 //Create our collection of enemies
-for(var i = 0; i<numberOfEnemies; i++){
+for (var i = 0; i < numberOfEnemies; i++) {
     enemies[i] = new GameObject();
     enemies[i].color = "red"
     enemies[i].w = 30;
     enemies[i].h = 30;
-    enemies[i].x = rand(0,c.width);
-    enemies[i].y = rand(0,c.height);
+    enemies[i].vy = 3;
+    enemies[i].x = rand(0, c.width);
+    enemies[i].y = rand(0, c.height);
 }
 
 
@@ -40,22 +46,61 @@ This is the function that makes the game work
 ---------------------------------------------*/
 
 function main() {
-    //erases the screen
     ctx.clearRect(0, 0, c.width, c.height);
+
+    switch (currentScene) {
+        case "start":
+            ctx.font = "60px Arial"
+            ctx.fillText("Play My Game", c.width / 2 - 200, c.height / 2)
+            break;
+        case "game":
+            game();
+            break;
+        case "gameOver":
+            ctx.font = "60px Arial"
+            ctx.fillText("You Win!", c.width / 2 - 150, c.height / 2)
+            break;
+    }
+
+    //erases the screen
 
     //Any changes to numbers
 
+
+}
+
+function game() {
     if (a == true || left == true) {
-        player.vx = -playerSpeed;
+        if (player.x > player.w / 2) {
+            player.vx = -playerSpeed;
+        } else {
+            player.vx = 0;
+            player.x = (player.w / 2)
+        }
     }
     if (d == true || right == true) {
-        player.vx = playerSpeed;
+        if (player.x < c.width - player.w / 2) {
+            player.vx = playerSpeed;
+        } else {
+            player.vx = 0;
+            player.x = c.width - player.w / 2
+        }
     }
     if (w == true || up == true) {
-        player.vy = -playerSpeed;
+        if (player.y > player.h / 2) {
+            player.vy = -playerSpeed;
+        } else {
+            player.vy = 0;
+            player.y = player.h / 2
+        }
     }
     if (s == true || down == true) {
-        player.vy = playerSpeed;
+        if (player.y < c.height - player.h / 2) {
+            player.vy = playerSpeed;
+        } else {
+            player.vy = 0;
+            player.y = c.height - player.h / 2
+        }
     }
     player.vx *= player.friction;
     player.vy *= player.friction;
@@ -63,11 +108,49 @@ function main() {
     //Any collision detection 
 
     //draw the pictures
-    for(var i = 0; i<enemies.length; i++){
-        enemies[i].render();
+    for (var i = 0; i < enemies.length; i++) {
+        enemies[i].move();
+        enemies[i].renderImage(krabbyPatty);
+        //reset them off screen
+        if (enemies[i].y > c.height + enemies[i].h) {
+            enemies[i].y = rand(-c.height, 0);
+            enemies[i].x = rand(0, c.width);
+            if (enemies[i].vy == 3) {
+                if (score > 0) {
+                    score--;
+                }
+            }
+            // enemies[i].vy = -3;
+        }
+
+        //reset enemies from top of screen
+        if (enemies[i].y < -enemies[i].h) {
+            enemies[i].y = rand(-c.height, 0);
+            enemies[i].x = rand(0, c.width);
+            if (enemies[i].vy == -3) {
+                score++;
+                enemies[i].vy = 3;
+            }
+        }
+
+        if (player.overlaps(enemies[i])) {
+            enemies[i].vy = -3;
+        }
     }
+
+    if(score>30){
+        currentScene = "gameOver"
+    }
+
     player.move();
     player.render();
+    ctx.font = "60px Arial"
+    ctx.fillText(`Score: ${score}`, 250, 50);
+}
+
+document.addEventListener(`keydown`, press)
+function press(e){
+    if(e.keyCode == 32){currentScene = "game"; score = 0}
 }
 
 //random number generator

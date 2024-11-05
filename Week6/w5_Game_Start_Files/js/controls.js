@@ -15,7 +15,6 @@ var down = false;
 document.addEventListener(`keydown`, press);
 function press(e)
 {
-    console.log(e.keyCode)
     if(e.keyCode == 87){w = true}
     if(e.keyCode == 83){s = true;}
     if(e.keyCode == 65){a = true;}
