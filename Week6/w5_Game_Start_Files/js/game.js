@@ -52,6 +52,10 @@ function main() {
         case "start":
             ctx.font = "60px Arial"
             ctx.fillText("Play My Game", c.width / 2 - 200, c.height / 2)
+            document.addEventListener(`keydown`, press)
+            function press(e) {
+                if (e.keyCode == 32 && currentScene != "game") { currentScene = "game"; score = 0 }
+            }
             break;
         case "game":
             game();
@@ -138,7 +142,7 @@ function game() {
         }
     }
 
-    if(score>30){
+    if (score > 30) {
         currentScene = "gameOver"
     }
 
@@ -148,10 +152,7 @@ function game() {
     ctx.fillText(`Score: ${score}`, 250, 50);
 }
 
-document.addEventListener(`keydown`, press)
-function press(e){
-    if(e.keyCode == 32){currentScene = "game"; score = 0}
-}
+
 
 //random number generator
 function rand(_low, _high) {
